@@ -4,7 +4,7 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-3">
         <div>
           <div className="text-lg font-extrabold tracking-tight">
-            Odysi<span className="text-accent">Poké</span>Store
+            Odissey Games
           </div>
           <p className="mt-2 text-sm text-muted">
             Artículos Pokémon con estética gaming, ofertas agresivas y checkout
@@ -81,7 +81,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border py-4 text-center text-xs text-muted">
-        © {new Date().getFullYear()} Odysi PokéStore. Proyecto demo.
+        © {new Date().getFullYear()} Odissey Games. Proyecto demo.
       </div>
     </footer>
   );

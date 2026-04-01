@@ -64,16 +64,18 @@ export function Navbar({
       </div>
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3">
         <Link
-          href="/"
+          href="/#top"
           className="group flex items-center gap-2 font-extrabold tracking-tight"
           aria-label="Ir a inicio"
+          onClick={() => {
+            setOpen(false);
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
         >
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-accent text-white shadow-sm">
             <Store className="h-5 w-5" aria-hidden="true" />
           </span>
-          <span className="text-lg">
-            Odysi<span className="text-accent">Poké</span>Store
-          </span>
+          <span className="text-lg">Odissey Games</span>
         </Link>
 
         <div className="hidden flex-1 items-center md:flex">

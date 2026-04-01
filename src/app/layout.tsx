@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Odysi PokéStore",
+  title: "Odissey Games",
   description:
     "Tienda de artículos Pokémon con estética gaming inspirada en GameStop.",
 };
