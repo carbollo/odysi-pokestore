@@ -1,5 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import { Search, ShoppingCart, Store, Zap } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+
+const POKEMON_CATEGORIES = {
+  expansions: ["30th Anniversary", "Ascended Heroes", "Phantasmal Flames"],
+  products: [
+    "Barajas de combate",
+    "Blisters",
+    "Cajas de colección",
+    "Cajas de entrenador",
+    "Caja de sobres",
+    "Latas",
+    "Sobres",
+  ],
+} as const;
 
 export function Navbar({
   cartCount,
@@ -8,6 +24,28 @@ export function Navbar({
   cartCount: number;
   onCartClick: () => void;
 }) {
+  const menuId = useId();
+  const [open, setOpen] = useState(false);
+  const closeTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  function scheduleClose() {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = window.setTimeout(() => setOpen(false), 120);
+  }
+
+  function cancelClose() {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = null;
+  }
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="border-b border-border bg-black text-white">
@@ -66,17 +104,79 @@ export function Navbar({
       </div>
       <nav className="border-t border-border bg-background">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-2 overflow-x-auto px-4 py-2 text-xs font-semibold text-foreground/90">
-          {[
-            "Cartas",
-            "Figuras",
-            "Peluches",
-            "Accesorios",
-            "Ofertas",
-            "Novedades",
-          ].map((label) => (
+          <div
+            className="relative"
+            onMouseEnter={() => {
+              cancelClose();
+              setOpen(true);
+            }}
+            onMouseLeave={scheduleClose}
+          >
+            <button
+              type="button"
+              className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1 transition hover:border-accent/60 hover:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-accent/40"
+              aria-haspopup="menu"
+              aria-expanded={open}
+              aria-controls={menuId}
+              onClick={() => setOpen((v) => !v)}
+              onFocus={() => setOpen(true)}
+              onBlur={scheduleClose}
+            >
+              Pokémon
+            </button>
+
+            {open ? (
+              <div
+                id={menuId}
+                role="menu"
+                className="absolute left-0 top-[calc(100%+10px)] w-[520px] max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-background p-4 shadow-xl"
+                onMouseEnter={cancelClose}
+                onMouseLeave={scheduleClose}
+              >
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="pr-2">
+                    <div className="text-[11px] font-extrabold tracking-widest text-foreground/80">
+                      EXPANSIONES
+                    </div>
+                    <div className="mt-3 space-y-2">
+                      {POKEMON_CATEGORIES.expansions.map((c) => (
+                        <a
+                          key={c}
+                          href="#catalogo"
+                          role="menuitem"
+                          className="block rounded-md px-2 py-2 text-sm font-semibold text-foreground/80 transition hover:bg-surface hover:text-foreground"
+                          onClick={() => setOpen(false)}
+                        >
+                          {c}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border-l border-border pl-4">
+                    <div className="space-y-1">
+                      {POKEMON_CATEGORIES.products.map((c) => (
+                        <a
+                          key={c}
+                          href="#catalogo"
+                          role="menuitem"
+                          className="block rounded-md px-2 py-2 text-sm text-muted transition hover:bg-surface hover:text-foreground"
+                          onClick={() => setOpen(false)}
+                        >
+                          {c}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </div>
+
+          {["Ofertas", "Novedades"].map((label) => (
             <a
               key={label}
-              href="#catalogo"
+              href={label === "Ofertas" ? "#ofertas" : "#novedades"}
               className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1 transition hover:border-accent/60 hover:bg-surface-2"
             >
               {label}
