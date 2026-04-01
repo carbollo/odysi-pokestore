@@ -103,88 +103,93 @@ export function Navbar({
         </button>
       </div>
       <nav className="border-t border-border bg-background">
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-2 overflow-x-auto px-4 py-2 text-xs font-semibold text-foreground/90">
-          <div
-            className="relative"
-            onMouseEnter={() => {
-              cancelClose();
-              setOpen(true);
-            }}
-            onMouseLeave={scheduleClose}
-          >
-            <button
-              type="button"
-              className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1 transition hover:border-accent/60 hover:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-accent/40"
-              aria-haspopup="menu"
-              aria-expanded={open}
-              aria-controls={menuId}
-              onClick={() => setOpen((v) => !v)}
-              onFocus={() => setOpen(true)}
-              onBlur={scheduleClose}
+        <div className="mx-auto w-full max-w-6xl px-4 py-2 text-xs font-semibold text-foreground/90">
+          <div className="flex items-center gap-2">
+            <div
+              className="relative"
+              onMouseEnter={() => {
+                cancelClose();
+                setOpen(true);
+              }}
+              onMouseLeave={scheduleClose}
             >
-              Pokémon
-            </button>
-
-            {open ? (
-              <div
-                id={menuId}
-                role="menu"
-                className="absolute left-0 top-[calc(100%+10px)] w-[520px] max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-background p-4 shadow-xl"
-                onMouseEnter={cancelClose}
-                onMouseLeave={scheduleClose}
+              <button
+                type="button"
+                className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1 transition hover:border-accent/60 hover:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-accent/40"
+                aria-haspopup="menu"
+                aria-expanded={open}
+                aria-controls={menuId}
+                onClick={() => setOpen((v) => !v)}
+                onFocus={() => setOpen(true)}
+                onBlur={scheduleClose}
               >
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="pr-2">
-                    <div className="text-[11px] font-extrabold tracking-widest text-foreground/80">
-                      EXPANSIONES
-                    </div>
-                    <div className="mt-3 space-y-2">
-                      {POKEMON_CATEGORIES.expansions.map((c) => (
-                        <a
-                          key={c}
-                          href="#catalogo"
-                          role="menuitem"
-                          className="block rounded-md px-2 py-2 text-sm font-semibold text-foreground/80 transition hover:bg-surface hover:text-foreground"
-                          onClick={() => setOpen(false)}
-                        >
-                          {c}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
+                Pokémon
+              </button>
 
-                  <div className="border-l border-border pl-4">
-                    <div className="space-y-1">
-                      {POKEMON_CATEGORIES.products.map((c) => (
-                        <a
-                          key={c}
-                          href="#catalogo"
-                          role="menuitem"
-                          className="block rounded-md px-2 py-2 text-sm text-muted transition hover:bg-surface hover:text-foreground"
-                          onClick={() => setOpen(false)}
-                        >
-                          {c}
-                        </a>
-                      ))}
+              {open ? (
+                <div
+                  id={menuId}
+                  role="menu"
+                  className="absolute left-0 top-[calc(100%+10px)] z-50 w-[520px] max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-background p-4 shadow-xl"
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={scheduleClose}
+                >
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="pr-2">
+                      <div className="text-[11px] font-extrabold tracking-widest text-foreground/80">
+                        EXPANSIONES
+                      </div>
+                      <div className="mt-3 space-y-2">
+                        {POKEMON_CATEGORIES.expansions.map((c) => (
+                          <a
+                            key={c}
+                            href="#catalogo"
+                            role="menuitem"
+                            className="block rounded-md px-2 py-2 text-sm font-semibold text-foreground/80 transition hover:bg-surface hover:text-foreground"
+                            onClick={() => setOpen(false)}
+                          >
+                            {c}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="border-l border-border pl-4">
+                      <div className="space-y-1">
+                        {POKEMON_CATEGORIES.products.map((c) => (
+                          <a
+                            key={c}
+                            href="#catalogo"
+                            role="menuitem"
+                            className="block rounded-md px-2 py-2 text-sm text-muted transition hover:bg-surface hover:text-foreground"
+                            onClick={() => setOpen(false)}
+                          >
+                            {c}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ) : null}
-          </div>
+              ) : null}
+            </div>
 
-          {["Ofertas", "Novedades"].map((label) => (
-            <a
-              key={label}
-              href={label === "Ofertas" ? "#ofertas" : "#novedades"}
-              className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1 transition hover:border-accent/60 hover:bg-surface-2"
-            >
-              {label}
-            </a>
-          ))}
-          <span className="ml-auto hidden text-muted md:inline">
-            Compra segura (demo) · Devolución fácil (demo)
-          </span>
+            <div className="flex flex-1 items-center gap-2 overflow-x-auto">
+              {["Ofertas", "Novedades"].map((label) => (
+                <a
+                  key={label}
+                  href={label === "Ofertas" ? "#ofertas" : "#novedades"}
+                  className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1 transition hover:border-accent/60 hover:bg-surface-2"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+
+            <span className="hidden text-muted md:inline">
+              Compra segura (demo) · Devolución fácil (demo)
+            </span>
+          </div>
         </div>
       </nav>
     </header>
