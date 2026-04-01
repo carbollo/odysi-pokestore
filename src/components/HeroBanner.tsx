@@ -104,9 +104,6 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
                 </div>
               </div>
             </div>
-
-            <div className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-2xl border border-border bg-background shadow-sm" />
-            <div className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-2xl border border-border bg-background shadow-sm" />
           </div>
         </div>
       </div>
