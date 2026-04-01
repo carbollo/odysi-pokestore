@@ -1,0 +1,85 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import type { StoreProduct } from "@/lib/pokeapi";
+import { Footer } from "@/components/Footer";
+import { CartSidebar } from "@/components/CartSidebar";
+import { HeroBanner } from "@/components/HeroBanner";
+import { Navbar } from "@/components/Navbar";
+import { ProductGrid } from "@/components/ProductGrid";
+import { cartTotalCount, useCartStore } from "@/store/cart";
+
+export function StoreFront({ products }: { products: StoreProduct[] }) {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const linesById = useCartStore((s) => s.linesById);
+  const add = useCartStore((s) => s.add);
+  const removeOne = useCartStore((s) => s.removeOne);
+
+  const cartCount = useMemo(() => cartTotalCount(linesById), [linesById]);
+
+  return (
+    <div className="flex flex-1 flex-col">
+      <Navbar cartCount={cartCount} onCartClick={() => setIsCartOpen(true)} />
+      <CartSidebar open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <HeroBanner
+        onShopNow={() => {
+          document
+            .getElementById("catalogo")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }}
+      />
+
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+        <section id="catalogo" className="scroll-mt-28">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-tight">
+                Catálogo
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                Productos cargados desde PokéAPI con precios retail simulados.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="rounded-md border border-border bg-surface px-3 py-2 text-sm font-bold transition hover:bg-surface-2"
+              onClick={() => setIsCartOpen(true)}
+            >
+              Ver carrito
+            </button>
+          </div>
+
+          <div className="mt-6">
+            <ProductGrid
+              products={products}
+              getQuantity={(id) => linesById[id]?.quantity ?? 0}
+              add={add}
+              remove={removeOne}
+            />
+          </div>
+        </section>
+
+        <section id="ofertas" className="mt-12 scroll-mt-28">
+          <div className="rounded-2xl border border-border bg-surface p-6">
+            <h3 className="text-xl font-extrabold tracking-tight">Ofertas</h3>
+            <p className="mt-2 text-sm text-muted">
+              Etiquetas, descuentos y urgencia visual al estilo retail gaming.
+            </p>
+          </div>
+        </section>
+
+        <section id="novedades" className="mt-6 scroll-mt-28">
+          <div className="rounded-2xl border border-border bg-surface p-6">
+            <h3 className="text-xl font-extrabold tracking-tight">Novedades</h3>
+            <p className="mt-2 text-sm text-muted">
+              Sección para lanzamientos y empujar conversión.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+
