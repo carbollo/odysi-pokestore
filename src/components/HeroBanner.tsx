@@ -19,9 +19,8 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
               <span className="text-accent">gaming</span> y checkout rápido
             </h1>
             <p className="mt-3 max-w-xl text-sm text-muted md:text-base">
-              Catálogo inspirado en lo mejor del retail gaming: tarjetas grandes,
-              descuentos visibles y llamadas a la acción claras para que el
-              usuario compre sin fricción.
+              Todo el catálogo de Pokémon en un solo lugar. Encuentra cartas,
+              figuras, peluches y ediciones coleccionista al mejor precio.
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">

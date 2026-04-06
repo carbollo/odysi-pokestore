@@ -37,7 +37,7 @@ export function StoreFront({ products }: { products: Product[] }) {
                 Catálogo
               </h2>
               <p className="mt-1 text-sm text-muted">
-                Productos cargados desde PokéAPI con precios retail simulados.
+                Explora todos nuestros productos disponibles.
               </p>
             </div>
             <button
@@ -61,9 +61,9 @@ export function StoreFront({ products }: { products: Product[] }) {
 
         <section id="ofertas" className="mt-12 scroll-mt-28">
           <div className="rounded-2xl border border-border bg-surface p-6">
-            <h3 className="text-xl font-extrabold tracking-tight">Ofertas</h3>
+            <h3 className="text-xl font-extrabold tracking-tight">Ofertas Especiales</h3>
             <p className="mt-2 text-sm text-muted">
-              Etiquetas, descuentos y urgencia visual al estilo retail gaming.
+              Descubre nuestras mejores rebajas y promociones.
             </p>
           </div>
         </section>
@@ -72,7 +72,7 @@ export function StoreFront({ products }: { products: Product[] }) {
           <div className="rounded-2xl border border-border bg-surface p-6">
             <h3 className="text-xl font-extrabold tracking-tight">Novedades</h3>
             <p className="mt-2 text-sm text-muted">
-              Sección para lanzamientos y empujar conversión.
+              Lo último en llegar a la tienda.
             </p>
           </div>
         </section>
