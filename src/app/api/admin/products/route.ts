@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+import crypto from "node:crypto";
 
 type CreateProductPayload = {
   title?: string;
@@ -12,6 +15,33 @@ type CreateProductPayload = {
   videoUrls?: string[];
 };
 
+export const runtime = "nodejs";
+
+const DATA_ROOT = process.env.MEDIA_STORAGE_PATH || "/data";
+
+function safeExt(filename: string) {
+  const ext = path.extname(filename).toLowerCase();
+  if (ext && ext.length <= 10) return ext;
+  return "";
+}
+
+async function saveUploadedFiles(files: File[], folder: "images" | "videos") {
+  if (!files.length) return [] as string[];
+
+  const targetDir = path.join(DATA_ROOT, folder);
+  await mkdir(targetDir, { recursive: true });
+
+  const urls: string[] = [];
+  for (const file of files) {
+    const bytes = Buffer.from(await file.arrayBuffer());
+    const unique = `${Date.now()}-${crypto.randomUUID()}${safeExt(file.name)}`;
+    const diskPath = path.join(targetDir, unique);
+    await writeFile(diskPath, bytes);
+    urls.push(`/api/media/${folder}/${unique}`);
+  }
+  return urls;
+}
+
 function toSlug(value: string) {
   return value
     .toLowerCase()
@@ -23,17 +53,54 @@ function toSlug(value: string) {
 
 export async function POST(req: Request) {
   try {
-    const body = (await req.json()) as CreateProductPayload;
+    const contentType = req.headers.get("content-type") || "";
+    let body: CreateProductPayload = {};
+    let uploadedImageUrls: string[] = [];
+    let uploadedVideoUrls: string[] = [];
+
+    if (contentType.includes("multipart/form-data")) {
+      const form = await req.formData();
+      body = {
+        title: String(form.get("title") ?? ""),
+        description: String(form.get("description") ?? ""),
+        priceEur: Number(String(form.get("priceEur") ?? "0").replace(",", ".")),
+        stock: Number(form.get("stock") ?? 0),
+        categoryId: String(form.get("categoryId") ?? ""),
+        categoryName: String(form.get("categoryName") ?? ""),
+        imageUrls: String(form.get("imageUrls") ?? "")
+          .split("\n")
+          .map((v) => v.trim())
+          .filter(Boolean),
+        videoUrls: String(form.get("videoUrls") ?? "")
+          .split("\n")
+          .map((v) => v.trim())
+          .filter(Boolean),
+      };
+
+      const imageFiles = form
+        .getAll("imageFiles")
+        .filter((value): value is File => value instanceof File && value.size > 0);
+      const videoFiles = form
+        .getAll("videoFiles")
+        .filter((value): value is File => value instanceof File && value.size > 0);
+
+      uploadedImageUrls = await saveUploadedFiles(imageFiles, "images");
+      uploadedVideoUrls = await saveUploadedFiles(videoFiles, "videos");
+    } else {
+      body = (await req.json()) as CreateProductPayload;
+    }
 
     const description = (body.description ?? "").trim();
     const priceEur = Number(body.priceEur);
     const stock = Math.max(0, Math.floor(Number(body.stock ?? 0)));
-    const imageUrls = (body.imageUrls ?? [])
-      .map((v) => v.trim())
-      .filter(Boolean);
-    const videoUrls = (body.videoUrls ?? [])
-      .map((v) => v.trim())
-      .filter(Boolean);
+    const imageUrls = [
+      ...(body.imageUrls ?? []).map((v) => v.trim()).filter(Boolean),
+      ...uploadedImageUrls,
+    ];
+    const videoUrls = [
+      ...(body.videoUrls ?? []).map((v) => v.trim()).filter(Boolean),
+      ...uploadedVideoUrls,
+    ];
 
     if (!Number.isFinite(priceEur) || priceEur <= 0) {
       return NextResponse.json({ error: "Precio inválido." }, { status: 400 });

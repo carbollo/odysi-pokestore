@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { AdminCreateProductButton } from "@/components/AdminCreateProductButton";
+import { AdminEditProductButton } from "@/components/AdminEditProductButton";
 
 export const dynamic = "force-dynamic";
 
@@ -7,8 +8,10 @@ export default async function AdminProducts() {
   let products: Array<{
     id: string;
     title: string;
+    description: string | null;
     priceEur: number;
     stock: number;
+    categoryId: string | null;
     category?: { name: string } | null;
   }> = [];
   let categories: Array<{ id: string; name: string }> = [];
@@ -99,9 +102,7 @@ export default async function AdminProducts() {
                           {product.stock}
                         </td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a href="#" className="text-accent hover:text-accent-2">
-                            Editar<span className="sr-only">, {product.title}</span>
-                          </a>
+                          <AdminEditProductButton product={product} categories={categories} />
                         </td>
                       </tr>
                     ))

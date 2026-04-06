@@ -54,24 +54,29 @@ export function AdminCreateProductButton({ categories }: { categories: CategoryO
       return;
     }
 
+    const payload = new FormData();
+    payload.set("title", title);
+    payload.set("description", description);
+    payload.set("priceEur", String(priceEur));
+    payload.set("stock", String(stock));
+    payload.set("categoryId", categoryId);
+    payload.set("categoryName", categoryName);
+    payload.set("imageUrls", imageUrls.join("\n"));
+    payload.set("videoUrls", videoUrls.join("\n"));
+
+    const imageFiles = form.getAll("imageFiles");
+    const videoFiles = form.getAll("videoFiles");
+    imageFiles.forEach((file) => payload.append("imageFiles", file));
+    videoFiles.forEach((file) => payload.append("videoFiles", file));
+
     const res = await fetch("/api/admin/products", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title,
-        description,
-        priceEur,
-        stock,
-        categoryId: categoryId || undefined,
-        categoryName: categoryName || undefined,
-        imageUrls,
-        videoUrls,
-      }),
+      body: payload,
     });
 
-    const payload = (await res.json()) as { error?: string };
+    const responseData = (await res.json()) as { error?: string };
     if (!res.ok) {
-      setError(payload.error ?? "No se pudo crear el producto.");
+      setError(responseData.error ?? "No se pudo crear el producto.");
       setSaving(false);
       return;
     }
@@ -187,11 +192,37 @@ export function AdminCreateProductButton({ categories }: { categories: CategoryO
 
               <div>
                 <label className="mb-1 block text-sm font-bold text-foreground">
-                  Imágenes (una URL por línea)
+                  Imágenes (archivos)
+                </label>
+                <input
+                  name="imageFiles"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none ring-accent/40 focus:ring-2"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-bold text-foreground">
+                  Videos (archivos)
+                </label>
+                <input
+                  name="videoFiles"
+                  type="file"
+                  accept="video/*"
+                  multiple
+                  className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none ring-accent/40 focus:ring-2"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-bold text-foreground">
+                  Imágenes (URLs opcionales, una por línea)
                 </label>
                 <textarea
                   name="imageUrls"
-                  rows={3}
+                  rows={2}
                   placeholder="https://.../imagen-1.jpg"
                   className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none ring-accent/40 focus:ring-2"
                 />
@@ -199,11 +230,11 @@ export function AdminCreateProductButton({ categories }: { categories: CategoryO
 
               <div>
                 <label className="mb-1 block text-sm font-bold text-foreground">
-                  Videos (una URL por línea)
+                  Videos (URLs opcionales, una por línea)
                 </label>
                 <textarea
                   name="videoUrls"
-                  rows={3}
+                  rows={2}
                   placeholder="https://.../video-1.mp4"
                   className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none ring-accent/40 focus:ring-2"
                 />
