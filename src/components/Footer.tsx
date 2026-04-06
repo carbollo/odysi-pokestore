@@ -51,6 +51,11 @@ export function Footer() {
                   Privacidad
                 </a>
               </li>
+              <li className="pt-2">
+                <a className="text-accent hover:text-accent-2 font-bold flex items-center gap-1" href="/admin">
+                  Panel de Admin
+                </a>
+              </li>
             </ul>
           </div>
         </div>
