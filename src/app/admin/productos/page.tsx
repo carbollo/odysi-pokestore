@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import { Plus } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProducts() {
   const products = await prisma.product.findMany({
     include: { category: true },
@@ -58,7 +60,7 @@ export default async function AdminProducts() {
                       </td>
                     </tr>
                   ) : (
-                    products.map((product) => (
+                    products.map((product: any) => (
                       <tr key={product.id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6">
                           {product.title}
