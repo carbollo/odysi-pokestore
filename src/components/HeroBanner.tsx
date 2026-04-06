@@ -7,14 +7,14 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
       <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
       <div className="absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-accent-2/10 blur-3xl" />
 
-      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 md:py-14 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-2">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-bold text-foreground">
               <Zap className="h-4 w-4 text-accent" aria-hidden="true" />
               Ofertas flash: -25% en productos destacados
             </div>
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
+            <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
               Compra artículos Pokémon con vibra{" "}
               <span className="text-accent">gaming</span> y checkout rápido
             </h1>
@@ -51,7 +51,7 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
                 </div>
               </div>
 
-              <div className="mt-4 grid grid-cols-2 gap-4">
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-xl border border-border bg-background p-4">
                   <div className="text-xs font-bold text-muted">Figura</div>
                   <div className="mt-1 text-lg font-extrabold">Pikachu</div>

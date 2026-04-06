@@ -129,7 +129,7 @@ export function CartSidebar({
                 )}
               </div>
 
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row">
                 <button
                   type="button"
                   onClick={clear}

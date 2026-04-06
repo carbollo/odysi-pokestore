@@ -45,7 +45,7 @@ export function ProductCard({
         <div className="text-sm font-extrabold leading-5">{product.title}</div>
         <div className="mt-1 text-xs text-muted">{product.subtitle}</div>
 
-        <div className="mt-4 flex items-end justify-between gap-3">
+        <div className="mt-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
           <div>
             <div className="text-lg font-extrabold">
               {product.priceEur.toFixed(2).replace(".", ",")} €
@@ -85,7 +85,7 @@ export function ProductCard({
             <button
               type="button"
               onClick={onAdd}
-              className="inline-flex items-center justify-center rounded-md bg-accent px-3 py-2 text-sm font-extrabold text-white shadow-sm transition hover:bg-accent-2 focus:outline-none focus:ring-2 focus:ring-accent/50 active:translate-y-[1px]"
+              className="inline-flex w-full items-center justify-center rounded-md bg-accent px-3 py-2 text-sm font-extrabold text-white shadow-sm transition hover:bg-accent-2 focus:outline-none focus:ring-2 focus:ring-accent/50 active:translate-y-[1px] sm:w-auto"
             >
               Añadir al carrito
             </button>
