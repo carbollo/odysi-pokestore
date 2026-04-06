@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { Plus } from "lucide-react";
+import { AdminCreateProductButton } from "@/components/AdminCreateProductButton";
 
 export const dynamic = "force-dynamic";
 
@@ -11,14 +11,22 @@ export default async function AdminProducts() {
     stock: number;
     category?: { name: string } | null;
   }> = [];
+  let categories: Array<{ id: string; name: string }> = [];
 
   try {
-    products = await prisma.product.findMany({
-      include: { category: true },
-      orderBy: { createdAt: "desc" },
-    });
+    [products, categories] = await Promise.all([
+      prisma.product.findMany({
+        include: { category: true },
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.category.findMany({
+        select: { id: true, name: true },
+        orderBy: { name: "asc" },
+      }),
+    ]);
   } catch {
     products = [];
+    categories = [];
   }
 
   return (
@@ -29,13 +37,7 @@ export default async function AdminProducts() {
           <p className="mt-2 text-sm text-muted">Gestiona el catálogo de la tienda.</p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-md bg-accent px-3 py-2 text-center text-sm font-extrabold text-white shadow-sm hover:bg-accent-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            <Plus className="h-4 w-4" />
-            Añadir producto
-          </button>
+          <AdminCreateProductButton categories={categories} />
         </div>
       </div>
       <div className="mt-8 flow-root">
