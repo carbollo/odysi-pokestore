@@ -1,17 +1,23 @@
+import { prisma } from "@/lib/db";
 import { ArrowUpRight, CreditCard, Package, Users } from "lucide-react";
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const productsCount = await prisma.product.count();
+  const categoriesCount = await prisma.category.count();
+  const ordersCount = await prisma.order.count();
+
   const stats = [
-    { name: "Ingresos totales", stat: "€24,500.00", icon: CreditCard, trend: "+12%" },
-    { name: "Pedidos activos", stat: "142", icon: Package, trend: "+5.4%" },
-    { name: "Nuevos clientes", stat: "89", icon: Users, trend: "+14%" },
+    { name: "Ingresos totales", stat: "€0.00", icon: CreditCard, trend: "0%" },
+    { name: "Pedidos activos", stat: ordersCount.toString(), icon: Package, trend: "0%" },
+    { name: "Productos", stat: productsCount.toString(), icon: Package, trend: "0%" },
+    { name: "Categorías", stat: categoriesCount.toString(), icon: Users, trend: "0%" },
   ];
 
   return (
     <div>
       <h1 className="text-2xl font-extrabold tracking-tight">Dashboard</h1>
       <p className="mt-2 text-sm text-muted">
-        Resumen de la actividad de la tienda. (Datos simulados)
+        Resumen de la actividad de la tienda.
       </p>
 
       <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

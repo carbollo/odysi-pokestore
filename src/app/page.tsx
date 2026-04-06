@@ -1,8 +1,12 @@
 import { StoreFront } from "@/components/StoreFront";
-import { fetchStoreProducts } from "@/lib/pokeapi";
+import { prisma } from "@/lib/db";
 
 export default async function Home() {
-  const products = await fetchStoreProducts({ limit: 18, offset: 0 });
+  const products = await prisma.product.findMany({
+    take: 18,
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
     <StoreFront products={products} />
   );

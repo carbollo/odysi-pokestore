@@ -1,6 +1,6 @@
 "use client";
 
-import type { StoreProduct } from "@/lib/pokeapi";
+import type { Product } from "@prisma/client";
 import { ProductCard } from "@/components/ProductCard";
 
 export function ProductGrid({
@@ -9,9 +9,9 @@ export function ProductGrid({
   add,
   remove,
 }: {
-  products: StoreProduct[];
+  products: Product[];
   getQuantity: (id: string) => number;
-  add: (product: StoreProduct) => void;
+  add: (product: Product) => void;
   remove: (productId: string) => void;
 }) {
   return (

@@ -1,5 +1,5 @@
 import { Minus, Plus, Sparkles } from "lucide-react";
-import type { StoreProduct } from "@/lib/pokeapi";
+import type { Product } from "@prisma/client";
 
 export function ProductCard({
   product,
@@ -7,7 +7,7 @@ export function ProductCard({
   onRemove,
   quantity,
 }: {
-  product: StoreProduct;
+  product: Product;
   quantity: number;
   onAdd: () => void;
   onRemove: () => void;

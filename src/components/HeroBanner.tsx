@@ -39,56 +39,6 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
             </div>
 
           </div>
-
-          <div className="relative">
-            <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div className="text-xs font-bold text-muted">
-                  Destacado de la semana
-                </div>
-                <div className="rounded-full bg-accent px-2 py-1 text-xs font-extrabold text-white">
-                  -15%
-                </div>
-              </div>
-
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-border bg-background p-4">
-                  <div className="text-xs font-bold text-muted">Figura</div>
-                  <div className="mt-1 text-lg font-extrabold">Pikachu</div>
-                  <div className="mt-2 text-2xl font-extrabold">
-                    24,99 <span className="text-sm text-muted">€</span>
-                  </div>
-                  <div className="mt-1 text-xs text-muted line-through">
-                    29,99 €
-                  </div>
-                  <div className="mt-4 h-24 rounded-lg bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.08),transparent_50%),linear-gradient(135deg,rgba(227,0,15,0.35),rgba(0,0,0,0))]" />
-                </div>
-                <div className="rounded-xl border border-border bg-background p-4">
-                  <div className="text-xs font-bold text-muted">Cartas</div>
-                  <div className="mt-1 text-lg font-extrabold">
-                    Booster Pack
-                  </div>
-                  <div className="mt-2 text-2xl font-extrabold">
-                    5,49 <span className="text-sm text-muted">€</span>
-                  </div>
-                  <div className="mt-1 text-xs text-muted">
-                    “Encuentra tu rareza”
-                  </div>
-                  <div className="mt-4 h-24 rounded-lg bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.07),transparent_55%),linear-gradient(135deg,rgba(255,45,45,0.22),rgba(0,0,0,0))]" />
-                </div>
-              </div>
-
-              <div className="mt-4 rounded-lg border border-border bg-background px-4 py-3">
-                <div className="flex items-center justify-between text-sm font-bold">
-                  <span>Compra 2 y ahorra</span>
-                  <span className="text-accent">-5% extra</span>
-                </div>
-                <div className="mt-1 text-xs text-muted">
-                  Aplica en selección de artículos (demo).
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

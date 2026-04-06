@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { StoreProduct } from "@/lib/pokeapi";
+import type { Product } from "@prisma/client";
 import { Footer } from "@/components/Footer";
 import { CartSidebar } from "@/components/CartSidebar";
 import { HeroBanner } from "@/components/HeroBanner";
@@ -9,7 +9,7 @@ import { Navbar } from "@/components/Navbar";
 import { ProductGrid } from "@/components/ProductGrid";
 import { cartTotalCount, useCartStore } from "@/store/cart";
 
-export function StoreFront({ products }: { products: StoreProduct[] }) {
+export function StoreFront({ products }: { products: Product[] }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const linesById = useCartStore((s) => s.linesById);
   const add = useCartStore((s) => s.add);

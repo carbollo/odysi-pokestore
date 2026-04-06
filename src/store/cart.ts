@@ -1,14 +1,14 @@
 import { create } from "zustand";
-import type { StoreProduct } from "@/lib/pokeapi";
+import type { Product } from "@prisma/client";
 
 export type CartLine = {
-  product: StoreProduct;
+  product: Product;
   quantity: number;
 };
 
 type CartState = {
   linesById: Record<string, CartLine>;
-  add: (product: StoreProduct) => void;
+  add: (product: Product) => void;
   removeOne: (productId: string) => void;
   setQuantity: (productId: string, quantity: number) => void;
   clear: () => void;

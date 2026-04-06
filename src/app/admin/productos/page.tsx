@@ -1,13 +1,19 @@
+import { prisma } from "@/lib/db";
 import { Plus } from "lucide-react";
 
-export default function AdminProducts() {
+export default async function AdminProducts() {
+  const products = await prisma.product.findMany({
+    include: { category: true },
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
     <div>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-extrabold tracking-tight">Productos</h1>
           <p className="mt-2 text-sm text-muted">
-            Gestiona el catálogo de la tienda. Actualmente los datos provienen de la PokéAPI.
+            Gestiona el catálogo de la tienda.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -37,7 +43,7 @@ export default function AdminProducts() {
                       Precio
                     </th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
-                      Estado
+                      Stock
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Editar</span>
@@ -45,57 +51,37 @@ export default function AdminProducts() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border bg-background">
-                  {/* Mock data row */}
-                  <tr>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6">
-                      Pikachu (Figura)
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
-                      Figuras
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
-                      24,99 €
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400">
-                        Activo
-                      </span>
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" className="text-accent hover:text-accent-2">
-                        Editar<span className="sr-only">, Pikachu (Figura)</span>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6">
-                      Booster Pack
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
-                      Cartas
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
-                      5,49 €
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400">
-                        Activo
-                      </span>
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" className="text-accent hover:text-accent-2">
-                        Editar<span className="sr-only">, Booster Pack</span>
-                      </a>
-                    </td>
-                  </tr>
+                  {products.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="py-8 text-center text-sm text-muted">
+                        No hay productos en la base de datos.
+                      </td>
+                    </tr>
+                  ) : (
+                    products.map((product) => (
+                      <tr key={product.id}>
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6">
+                          {product.title}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
+                          {product.category?.name ?? "Sin categoría"}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
+                          {product.priceEur.toFixed(2).replace(".", ",")} €
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-muted">
+                          {product.stock}
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                          <a href="#" className="text-accent hover:text-accent-2">
+                            Editar<span className="sr-only">, {product.title}</span>
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
-            </div>
-            <div className="mt-4 text-sm text-muted text-center bg-surface-2 p-4 rounded-lg border border-border">
-              <p>
-                <strong>Nota:</strong> Para que este panel sea funcional y puedas añadir/editar productos reales,
-                necesitamos configurar una base de datos (ej. Supabase, PostgreSQL) y un sistema de autenticación.
-              </p>
             </div>
           </div>
         </div>
