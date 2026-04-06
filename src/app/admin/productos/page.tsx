@@ -4,19 +4,29 @@ import { Plus } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function AdminProducts() {
-  const products = await prisma.product.findMany({
-    include: { category: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let products: Array<{
+    id: string;
+    title: string;
+    priceEur: number;
+    stock: number;
+    category?: { name: string } | null;
+  }> = [];
+
+  try {
+    products = await prisma.product.findMany({
+      include: { category: true },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch {
+    products = [];
+  }
 
   return (
     <div>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-extrabold tracking-tight">Productos</h1>
-          <p className="mt-2 text-sm text-muted">
-            Gestiona el catálogo de la tienda.
-          </p>
+          <p className="mt-2 text-sm text-muted">Gestiona el catálogo de la tienda.</p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
@@ -31,20 +41,32 @@ export default async function AdminProducts() {
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg border border-border">
+            <div className="overflow-hidden border border-border shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
               <table className="min-w-full divide-y divide-border">
                 <thead className="bg-surface">
                   <tr>
-                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-foreground sm:pl-6">
+                    <th
+                      scope="col"
+                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-foreground sm:pl-6"
+                    >
                       Nombre
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-foreground"
+                    >
                       Categoría
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-foreground"
+                    >
                       Precio
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-foreground">
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-foreground"
+                    >
                       Stock
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -60,7 +82,7 @@ export default async function AdminProducts() {
                       </td>
                     </tr>
                   ) : (
-                    products.map((product: any) => (
+                    products.map((product) => (
                       <tr key={product.id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6">
                           {product.title}
