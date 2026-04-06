@@ -52,7 +52,7 @@ export function Navbar({
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header className="sticky top-0 z-40 border-b border-border bg-background md:bg-background/85 md:backdrop-blur md:supports-[backdrop-filter]:bg-background/70">
       <div className="border-b border-border bg-black text-white">
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-3 px-4 py-2 text-xs font-bold sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
