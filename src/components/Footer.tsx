@@ -1,7 +1,7 @@
 export function Footer() {
   return (
     <footer className="mt-10 border-t border-border bg-background">
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <div className="text-lg font-extrabold tracking-tight">
             Odissey Games

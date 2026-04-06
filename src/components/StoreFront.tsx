@@ -29,7 +29,7 @@ export function StoreFront({ products }: { products: StoreProduct[] }) {
         }}
       />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+      <main className="mx-auto w-full max-w-[1440px] flex-1 px-4 py-8 sm:px-6 lg:px-8">
         <section id="catalogo" className="scroll-mt-28">
           <div className="flex items-end justify-between gap-4">
             <div>

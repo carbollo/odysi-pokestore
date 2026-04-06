@@ -49,7 +49,7 @@ export function Navbar({
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="border-b border-border bg-black text-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-2 text-xs font-bold">
+        <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-3 px-4 py-2 text-xs font-bold sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <Zap className="h-4 w-4 text-accent" aria-hidden="true" />
             <span>Flash deals hoy</span>
@@ -62,7 +62,7 @@ export function Navbar({
           </div>
         </div>
       </div>
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3">
+      <div className="mx-auto flex w-full max-w-[1440px] items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/#top"
           className="group flex items-center gap-2 font-extrabold tracking-tight"
@@ -105,7 +105,7 @@ export function Navbar({
         </button>
       </div>
       <nav className="border-t border-border bg-background">
-        <div className="mx-auto w-full max-w-6xl px-4 py-2 text-xs font-semibold text-foreground/90">
+        <div className="mx-auto w-full max-w-[1440px] px-4 py-2 text-xs font-semibold text-foreground/90 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <div
               className="relative"

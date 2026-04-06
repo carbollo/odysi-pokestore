@@ -7,7 +7,7 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
       <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
       <div className="absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-accent-2/10 blur-3xl" />
 
-      <div className="relative mx-auto w-full max-w-6xl px-4 py-10 md:py-14">
+      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-bold text-foreground">
