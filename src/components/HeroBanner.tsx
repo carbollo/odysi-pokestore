@@ -38,22 +38,6 @@ export function HeroBanner({ onShopNow }: { onShopNow: () => void }) {
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-              {[
-                { k: "🔥", t: "Rebajas", s: "por tiempo limitado" },
-                { k: "⚡", t: "Rápido", s: "carrito lateral" },
-                { k: "✅", t: "Claro", s: "CTA siempre visible" },
-              ].map((x) => (
-                <div
-                  key={x.t}
-                  className="rounded-lg border border-border bg-surface px-3 py-3"
-                >
-                  <div className="text-lg">{x.k}</div>
-                  <div className="mt-1 text-xs font-extrabold">{x.t}</div>
-                  <div className="text-[11px] text-muted">{x.s}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="relative">
